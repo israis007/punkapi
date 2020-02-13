@@ -8,7 +8,7 @@ import com.google.gson.Gson
 
 @Keep
 data class BeerModel (
-    val id : Int,
+    val id : Long,
     val name : String,
     val tagline : String,
     val first_brewed : String,
@@ -16,12 +16,12 @@ data class BeerModel (
     val image_url : String,
     val abv : Double,
     val ibu : Double,
-    val target_fg : Int,
+    val target_fg : Double,
     val target_og : Double,
-    val ebc : Int,
-    val srm : Int,
+    val ebc : Double,
+    val srm : Double,
     val ph : Double,
-    val attenuation_level : Int,
+    val attenuation_level : Double,
     val volume : Volume,
     val boil_volume : Boil_volume,
     val method : Method,
@@ -43,23 +43,23 @@ data class BeerModel (
 }
 
 data class Volume (
-    val value: Int,
+    val value: Double,
     val unit: String
 )
 
 data class Boil_volume (
-    val value : Int,
+    val value : Double,
     val unit : String
 )
 
 data class Temp (
-    val value: Int,
+    val value: Double,
     val unit: String
 )
 
 data class Mash_temp (
     val temp: Temp,
-    val duration: Int
+    val duration: Double
 )
 
 data class Fermentation (

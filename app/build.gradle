@@ -1,0 +1,116 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    dataBinding {
+        enabled = true
+    }
+    defaultConfig {
+        applicationId "com.test.punkapi"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile file("../signs.jks")
+            storePassword "Ikaros007"
+            keyAlias "release"
+            keyPassword "PirataRam"
+        }
+        debug {
+            storeFile file("../signs.jks")
+            storePassword "Ikaros007"
+            keyAlias "release"
+            keyPassword "PirataRam"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            resValue "string", "punkapi_url", "https://api.punkapi.com"
+            resValue "string", "date_pattern", "dd/MM/YYYY"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            multiDexEnabled = true
+        }
+        debug {
+            versionNameSuffix = '- develop'
+            signingConfig signingConfigs.debug
+            resValue "string", "punkapi_url", "https://api.punkapi.com"
+            resValue "string", "date_pattern", "dd/MM/YYYY"
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            multiDexEnabled = true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+def Lifecycle_version = "2.2.0"
+def Coroutines_version = "1.3.0"
+def Constraint_version = "1.1.3"
+def Corektx_version = "1.2.0"
+def Appcompat_version = "1.1.0"
+def Junit_version = '4.13'
+def JunitTest_version = '1.1.1'
+def Espresso_version = '3.2.0'
+def Retrofit_version = '2.7.1'
+def MultiDex_version = "2.0.1"
+def RecyclerView_version = "1.1.0"
+def Glide_version = "4.11.0"
+def OkHttp_version = "3.11.0"
+def Legacy_version = "1.0.0"
+def RetrofitCoroutines_version = "0.9.2"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Core
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:$Corektx_version"
+
+    //Component UI
+    implementation "androidx.constraintlayout:constraintlayout:$Constraint_version"
+    implementation "androidx.appcompat:appcompat:$Appcompat_version"
+    implementation "androidx.recyclerview:recyclerview:$RecyclerView_version"
+    implementation "androidx.legacy:legacy-support-v4:$Legacy_version"
+
+    //Multidex
+    implementation "androidx.multidex:multidex:$MultiDex_version"
+
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$Lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$Lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$Lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$Lifecycle_version"
+
+    //Glide (Image cropper)
+    implementation "com.github.bumptech.glide:glide:$Glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$Glide_version"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$Coroutines_version"
+
+    //Retrofit and Converters
+    implementation "com.squareup.retrofit2:retrofit:$Retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$Retrofit_version"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$RetrofitCoroutines_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$OkHttp_version"
+
+
+    //Test
+    testImplementation "junit:junit:$Junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$JunitTest_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$Espresso_version"
+}

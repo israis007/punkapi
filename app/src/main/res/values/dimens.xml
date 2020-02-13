@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_cv_image_witdh">50sp</dimen>
+    <dimen name="main_cv_image_height">75sp</dimen>
+    <dimen name="main_cv_image_margin">8sp</dimen>
+    <dimen name="main_cv_text_margin_start">8sp</dimen>
+    <dimen name="main_cv_text_margin_end">12sp</dimen>
+</resources>

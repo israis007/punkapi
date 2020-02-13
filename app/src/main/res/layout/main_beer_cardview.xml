@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/main_beer_cv_icon"
+        android:layout_width="@dimen/main_cv_image_witdh"
+        android:layout_height="@dimen/main_cv_image_height"
+        android:layout_margin="@dimen/main_cv_image_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/main_cv_image_description" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/main_beer_cv_tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/main_beer_cv_icon"
+        android:layout_marginEnd="@dimen/main_cv_text_margin_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/main_beer_cv_icon"
+        app:layout_constraintBottom_toTopOf="@id/main_beer_cv_gl"
+        android:layout_marginStart="@dimen/main_cv_text_margin_start"
+        android:fontFamily="sans-serif-black"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_beer_cv_gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/main_beer_cv_tv_tagline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_cv_text_margin_start"
+        android:layout_marginEnd="@dimen/main_cv_text_margin_end"
+        app:layout_constraintStart_toEndOf="@id/main_beer_cv_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_beer_cv_gl"
+        app:layout_constraintBottom_toBottomOf="@id/main_beer_cv_icon"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

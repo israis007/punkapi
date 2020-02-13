@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.punkapi.R
 import com.test.punkapi.ui.mainscreen.models.BeerModel
@@ -18,9 +18,9 @@ class beerAdapter(
 
     inner class BeerItem(private val beerView: View) : RecyclerView.ViewHolder(beerView) {
         fun bindItems(beerModel: BeerModel) {
-            beerModel.loadImage(beerView.findViewWithTag(R.id.main_beer_cv_icon) as ImageView)
-            beerView.findViewById<AppCompatEditText>(R.id.main_beer_cv_tv_name).setText(beerModel.name)
-            beerView.findViewById<AppCompatEditText>(R.id.main_beer_cv_tv_tagline).setText(beerModel.tagline)
+            beerModel.loadImage(beerView.findViewById(R.id.main_beer_cv_icon) as ImageView)
+            beerView.findViewById<AppCompatTextView>(R.id.main_beer_cv_tv_name).text = beerModel.name
+            beerView.findViewById<AppCompatTextView>(R.id.main_beer_cv_tv_tagline).text = beerModel.tagline
             beerView.setOnClickListener {
                 event.onTouchItem(beerModel)
             }

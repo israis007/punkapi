@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_beer_cv_parentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/round_corners"
+    android:layout_marginTop="@dimen/divider_height"
+    android:layout_marginStart="@dimen/divider_height"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -43,5 +47,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_beer_cv_gl"
         app:layout_constraintBottom_toBottomOf="@id/main_beer_cv_icon"/>
+
+    <ProgressBar
+        android:id="@+id/main_beer_loading_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/divider_height"
+        android:progressTintMode="src_over"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_in"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

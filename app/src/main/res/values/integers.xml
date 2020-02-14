@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="timeOut">15</integer>
-    <integer name="elementsByPage">10</integer>
+    <integer name="elementsByPage">6</integer>
+    <integer name="pageBegin">6</integer>
 </resources>

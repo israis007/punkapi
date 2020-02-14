@@ -10,11 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.punkapi.App
 import com.test.punkapi.R
 import com.test.punkapi.databinding.ActivityMainBinding
 import com.test.punkapi.ui.mainscreen.adapters.beerAdapter
-import com.test.punkapi.ui.mainscreen.models.BeerModel
+import com.test.punkapi.ui.mainscreen.models.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivityView : AppCompatActivity() {
@@ -22,14 +21,11 @@ class MainActivityView : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var mainVM: MainActivityViewModel
     private val TAG = "MainActivityView"
+    val linearlm = LinearLayoutManager(this)
+    lateinit var adapter: beerAdapter
+    private var firstTime = true
+    private var isUp = false
     private var isScrolling = false
-    private var currentItems = 0
-    private var totalItems = 0
-    private var scrollOutItems = 0
-    private var beforePage = 6
-    private val pageStart = 6
-    private var lastpage = 6
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,26 +34,42 @@ class MainActivityView : AppCompatActivity() {
         binding.mainActivityViewModel = mainVM
         mainVM.activityViewModel = this
         binding.lifecycleOwner = this
-        main_swiperl.setOnRefreshListener {
-            val page = mainVM.page.value!!.toInt()
-            if (page in 2..pageStart){
-                refreshData(true)
-            } else
-                main_swiperl.isRefreshing = false
-        }
-        val linearlm = LinearLayoutManager(this)
+        //Creation of LayoutManager
         linearlm.orientation = RecyclerView.VERTICAL
         main_recview.layoutManager = linearlm
-        main_recview.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+        val listaToAdap = ArrayList<BeerModel>()
+        //Adding a clean item to show loading circle
+        listaToAdap.add(BeerModel(0, "Pirata","tagline", "", "", "", 0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, Volume(0.0, ""), Boil_volume(0.0, ""),
+            Method(List(1){ Mash_temp(Temp(0.0, ""), 1.0)}, Fermentation(Temp(
+            Double.MIN_VALUE, "")), ""),
+            Ingredients(List(1){ Malt("", Amount(0.0, ""))},
+                List(1){ Hops("", Amount(0.0, ""), "", "")},
+                ""),
+            List(1){""}, "", ""
+        ))
+        adapter = beerAdapter(this, listaToAdap, object: beerAdapter.OnBeerTouchEvent{
+            override fun onTouchItem(beerModel: BeerModel) {
+                //Update ui Main
+                Log.d("Main", beerModel.toString())
+            }
+        })
+        main_recview.adapter = adapter
+        main_recview.setHasFixedSize(false)
+        main_recview.isNestedScrollingEnabled = true
+        //Events
+        main_swiperl.setOnRefreshListener {
+            refreshData(true)
+        }
+        main_recview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                currentItems = linearlm.childCount
-                totalItems = linearlm.itemCount
-                scrollOutItems = linearlm.findFirstVisibleItemPosition()
-
-                if (isScrolling && (currentItems + scrollOutItems == totalItems)){
+                if (isScrolling && (linearlm.itemCount - linearlm.findFirstVisibleItemPosition() - linearlm.childCount == 0)){
                     isScrolling = false
                     refreshData(false)
+                }
+                if (firstTime){
+                    firstTime = false
+                    linearlm.scrollToPosition(0)
                 }
             }
 
@@ -67,46 +79,41 @@ class MainActivityView : AppCompatActivity() {
                     isScrolling = true
             }
         })
-        mainVM.page.value = pageStart
-        mainVM.elementsByPage.value = App.instance.resources.getInteger(R.integer.elementsByPage)
+        //Observers
+        mainVM.beerRetro.observe(this, Observer {
+            loadRecyclerView(it)
+        })
+
+        //Get first Data
         refreshData(false)
     }
 
     private fun refreshData(isUp: Boolean){
-        if (isUp){
-            beforePage--
-            mainVM.page.value = beforePage
-        } else {
-            mainVM.page.value = lastpage
-            lastpage++
-        }
-        mainVM.beersList.removeObservers(this)
-        mainVM.busy.value = View.VISIBLE as Integer
-        val temp = mainVM.updateBeers(isUp)
-        mainVM.beersList.observe(this, Observer {
-            loadRecyclerView(it, temp, isUp)
+        this.isUp = isUp
+        if (mainVM.page.value!!.toInt() == 1)
             main_swiperl.isRefreshing = false
-        })
+        else {
+            mainVM.updatePage(isUp)
+            mainVM.getBeersRetro()
+        }
     }
 
-    private fun loadRecyclerView(beers: ArrayList<BeerModel>, itemsAdded: Int, isUp: Boolean){
-        main_recview.adapter = beerAdapter(this, beers, object: beerAdapter.onBeerTouchEvent{
-            override fun onTouchItem(beerModel: BeerModel) {
-                //Update ui Main
-                Log.d("Main", "La chela seleccionada es ($beerModel.name):\n$beerModel")
-            }
-        })
-        main_recview.setHasFixedSize(false)
-        main_recview.isNestedScrollingEnabled = true
-        var resta = beers.size - itemsAdded
-        repeat(itemsAdded) {
-            if (isUp){
-                main_recview.adapter!!.notifyItemInserted(it)
-            } else {
-                main_recview.adapter!!.notifyItemInserted(resta)
-                resta++
-            }
-        }
+    private fun loadRecyclerView(beers: List<BeerModel>){
+        if (isUp) {
+            adapter.addItemsBefore(beers)
+            linearlm.scrollToPosition(0)
+        } else
+            adapter.addItemsAfter(beers)
         mainVM.busy.value = View.GONE as Integer
+        main_swiperl.isRefreshing = false
+    }
+
+    private fun loadRecyclerView(beers: BeerModel){
+        if (isUp)
+            adapter.addItemsBefore(beers)
+        else
+            adapter.addItemsAfter(beers)
+        mainVM.busy.value = View.GONE as Integer
+        main_swiperl.isRefreshing = false
     }
 }

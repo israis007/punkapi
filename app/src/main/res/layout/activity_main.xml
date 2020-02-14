@@ -9,30 +9,156 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/main_gl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent=".45"/>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/main_swiperl"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <include
+            android:id="@+id/nonetwork_layout"
+            layout="@layout/nonetwork"
+            android:visibility="@{MainActivityViewModel.showNoInternet}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/main_gl"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/main_recview"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="@{MainActivityViewModel.showMainLayout}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/main_gl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".45"/>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/main_swiperl"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/main_gl"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_recview"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    />
 
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ImageView
+                android:id="@+id/main_iv"
+                android:src="@android:drawable/ic_menu_search"
+                android:layout_width="@dimen/main_iv_width"
+                android:layout_height="@dimen/main_iv_height"
+                android:layout_marginStart="@dimen/main_iv_margin_start"
+                android:layout_marginTop="@dimen/main_iv_margin_top"
+                android:contentDescription="@string/main_iv_image_description"
+                app:layout_constraintStart_toEndOf="@id/main_gl"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_tagline_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/main_actv_tagline_title"
+                app:layout_constraintStart_toEndOf="@id/main_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/main_iv"
+                android:layout_marginStart="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_tagline_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                app:layout_constraintStart_toEndOf="@id/main_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_actv_tagline_title"
+                android:layout_marginStart="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start"
+                android:text="@{MainActivityViewModel.tagline}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_fbrewed_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/main_actv_fbrewed_title"
+                app:layout_constraintStart_toEndOf="@id/main_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                app:layout_constraintTop_toBottomOf="@id/main_actv_tagline_text"
+                android:layout_marginStart="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_fbrewed_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                app:layout_constraintStart_toEndOf="@id/main_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_actv_fbrewed_title"
+                android:layout_marginStart="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start"
+                android:text="@{MainActivityViewModel.brewedDate}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_food_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/main_actv_food_title"
+                app:layout_constraintStart_toEndOf="@id/main_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                app:layout_constraintTop_toBottomOf="@id/main_actv_fbrewed_text"
+                android:layout_marginStart="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_food_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scrollbars="vertical"
+                android:maxLines="@integer/maxlines"
+                android:layout_marginStart="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginBottom="@dimen/main_actv_tagline_margin_top"
+                android:text="@{MainActivityViewModel.foodPairing}"
+                app:layout_constraintBottom_toBottomOf="@+id/main_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/main_iv"
+                app:layout_constraintTop_toBottomOf="@id/main_actv_food_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_description_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/main_actv_description_title"
+                app:layout_constraintStart_toEndOf="@id/main_gl"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                app:layout_constraintTop_toBottomOf="@id/main_iv"
+                android:layout_marginStart="@dimen/main_iv_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/main_actv_description_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/main_actv_tagline_margin_top"
+                android:scrollbars="vertical"
+                android:maxLines="@integer/maxlines"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/main_gl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_actv_description_title"
+                android:layout_marginStart="@dimen/main_iv_margin_start"
+                android:layout_marginEnd="@dimen/main_actv_tagline_margin_start"
+                android:layout_marginBottom="@dimen/main_iv_margin_start"
+                android:text="@{MainActivityViewModel.description}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

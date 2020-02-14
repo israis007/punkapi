@@ -1,5 +1,5 @@
 package com.test.punkapi.rest.exceptions
 
-import java.lang.RuntimeException
+import java.io.IOException
 
-class NoNetworkAvalaibleException: RuntimeException()
+class NoNetworkAvalaibleException(message: String): IOException(message)

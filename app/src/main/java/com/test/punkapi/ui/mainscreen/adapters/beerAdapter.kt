@@ -69,11 +69,6 @@ class beerAdapter(
         }
     }
 
-    fun addItemsBefore(beerModel: BeerModel) {
-        this.listBeers.add(0, beerModel)
-        notifyItemInserted(0)
-    }
-
     fun addItemsAfter(listBeers: List<BeerModel>) {
         var rest = if (this.listBeers.size <= 1) 0 else this.listBeers.size - 1
         repeat(listBeers.size) {
@@ -81,11 +76,6 @@ class beerAdapter(
             notifyItemInserted(rest)
             rest++
         }
-    }
-
-    fun addItemsAfter(beerModel: BeerModel) {
-        this.listBeers.add(this.listBeers.size - 2, beerModel)
-        notifyItemInserted(itemCount - 2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerItem =

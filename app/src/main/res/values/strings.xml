@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">PunkAPI</string>
     <string name="main_cv_image_description">Imagen de referencia de la cerveza</string>
+    <string name="main_iv_image_description">Imagen en Grande de la cerveza</string>
+    <string name="main_actv_tagline_title">Tagline</string>
+    <string name="main_actv_fbrewed_title">First brewed date</string>
+    <string name="main_actv_description_title">Description</string>
+    <string name="main_actv_food_title">Food pairing</string>
+    <string name="no_internet">No internet Connection Avalaible</string>
 </resources>

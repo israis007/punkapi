@@ -12,4 +12,10 @@
     <dimen name="corner_radius_bottom_right">20dp</dimen>
     <dimen name="corner_radius_bottom_left">10dp</dimen>
     <dimen name="divider_height">3dp</dimen>
+    <dimen name="main_iv_margin_start">12sp</dimen>
+    <dimen name="main_iv_margin_top">8sp</dimen>
+    <dimen name="main_iv_width">100sp</dimen>
+    <dimen name="main_iv_height">180sp</dimen>
+    <dimen name="main_actv_tagline_margin_start">12sp</dimen>
+    <dimen name="main_actv_tagline_margin_top">4sp</dimen>
 </resources>

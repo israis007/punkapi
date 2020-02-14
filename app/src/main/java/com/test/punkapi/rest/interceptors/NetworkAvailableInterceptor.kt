@@ -20,7 +20,7 @@ class NetworkAvailableInterceptor(private val viewModel: ViewModelStoreOwner): I
         if (!NetworkChecker.isConnected()) {
             Log.d(TAG, "Device is not connect to any network")
             model.isConnected.postValue(false)
-            throw NoNetworkAvalaibleException()
+            throw NoNetworkAvalaibleException("No connected to Internet")
         } else
             model.isConnected.postValue(true)
         return chain.proceed(request)

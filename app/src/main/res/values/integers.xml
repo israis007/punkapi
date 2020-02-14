@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="timeOut">15</integer>
-    <integer name="elementsByPage">6</integer>
+    <integer name="timeOut">18</integer>
+    <integer name="elementsByPage">9</integer>
     <integer name="pageBegin">6</integer>
+    <integer name="maxlines">90</integer>
 </resources>

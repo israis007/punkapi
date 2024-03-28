@@ -17,7 +17,6 @@ import com.test.punkapi.R
 import com.test.punkapi.databinding.ActivityMainBinding
 import com.test.punkapi.ui.mainscreen.adapters.beerAdapter
 import com.test.punkapi.ui.mainscreen.models.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivityView : AppCompatActivity() {
 
@@ -42,7 +41,7 @@ class MainActivityView : AppCompatActivity() {
 
         //Creation of LayoutManager
         linearlm.orientation = RecyclerView.VERTICAL
-        main_recview.layoutManager = linearlm
+        binding.mainRecview.layoutManager = linearlm
         val listaToAdap = ArrayList<BeerModel>()
 
         //Adding a clean item to show loading circle
@@ -72,16 +71,16 @@ class MainActivityView : AppCompatActivity() {
                 mainVM.brewedDate.value = beerModel.first_brewed
             }
         })
-        main_recview.adapter = adapter
-        main_recview.setHasFixedSize(false)
-        main_recview.isNestedScrollingEnabled = true
-        nonetwork_layout.visibility = View.GONE
+        binding.mainRecview.adapter = adapter
+        binding.mainRecview.setHasFixedSize(false)
+        binding.mainRecview.isNestedScrollingEnabled = true
+//        binding.nonetworkLayout.visibility = View.GONE
 
         //Events
-        main_swiperl.setOnRefreshListener {
+        binding.mainSwiperl.setOnRefreshListener {
             refreshData(true)
         }
-        main_recview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        binding.mainRecview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (isScrolling && (linearlm.itemCount - linearlm.findFirstVisibleItemPosition() - linearlm.childCount == 0)){
@@ -100,11 +99,11 @@ class MainActivityView : AppCompatActivity() {
                     isScrolling = true
             }
         })
-        main_actv_description_text.movementMethod = ScrollingMovementMethod()
-        main_actv_food_text.movementMethod = ScrollingMovementMethod()
-        nonetwork_layout.setOnClickListener {
-            refreshData(false)
-        }
+        binding.mainActvDescriptionText.movementMethod = ScrollingMovementMethod()
+        binding.mainActvFoodText.movementMethod = ScrollingMovementMethod()
+//        binding.nonetworkLayout.setOnClickListener {
+//            refreshData(false)
+//        }
 
         //Observers
         mainVM.beerRetro.observe(this, Observer {
@@ -118,20 +117,20 @@ class MainActivityView : AppCompatActivity() {
                 .setDefaultRequestOptions(RequestOptions().fitCenter())
                 .load(mainVM.imageURL.value.toString())
                 .placeholder(android.R.drawable.ic_menu_search)
-                .into(main_iv)
+                .into(binding.mainIv)
         })
 
         //Get first Data
-        mainVM.showNoInternet.value = View.GONE as Integer
-        mainVM.showMainLayout.value = View.VISIBLE as Integer
+//        mainVM.showNoInternet.value = View.GONE as Integer
+//        mainVM.showMainLayout.value = View.VISIBLE as Integer
         refreshData(false)
     }
 
     private fun refreshData(isUp: Boolean){
-        nonetwork_layout.visibility = View.GONE
+//        binding.nonetworkLayout.visibility = View.GONE
         this.isUp = isUp
         if (mainVM.page.value!!.toInt() == 1)
-            main_swiperl.isRefreshing = false
+            binding.mainSwiperl.isRefreshing = false
         else {
             mainVM.updatePage(isUp)
             mainVM.getBeersRetro()
@@ -144,7 +143,7 @@ class MainActivityView : AppCompatActivity() {
             linearlm.scrollToPosition(0)
         } else
             adapter.addItemsAfter(beers)
-        mainVM.busy.value = View.GONE as Integer
-        main_swiperl.isRefreshing = false
+//        mainVM.busy.value = View.GONE as Integer
+        binding.mainSwiperl.isRefreshing = false
     }
 }

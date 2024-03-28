@@ -12,14 +12,12 @@
         <include
             android:id="@+id/nonetwork_layout"
             layout="@layout/nonetwork"
-            android:visibility="@{MainActivityViewModel.showNoInternet}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:visibility="@{MainActivityViewModel.showMainLayout}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
             <androidx.constraintlayout.widget.Guideline

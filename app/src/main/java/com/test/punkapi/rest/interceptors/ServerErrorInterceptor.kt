@@ -17,11 +17,13 @@ class ServerErrorInterceptor(private val viewModel: ViewModelStoreOwner): Interc
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        Log.d(TAG, "Response code: ${response.code()}")
-        if (response.code() > 500){
-            Log.e(TAG, "Server is Broken, body: ${response.body()}")
+        Log.d(TAG, "Response code: ${response.code}")
+        if (response.code > 500){
+            Log.e(TAG, "Server is Broken, body: ${response.body}")
             model = ViewModelProvider(viewModel)[BaseModel::class.java]
-            model.notServiceResponse.postValue(NotServiceResponse(response.code(), response.body().toString(), response.message()))
+            model.notServiceResponse.postValue(NotServiceResponse(response.code, response.body.toString(),
+                response.message
+            ))
             throw NoServiceAvailableException()
         }
         return response

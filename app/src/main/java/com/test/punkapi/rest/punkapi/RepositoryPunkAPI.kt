@@ -48,12 +48,12 @@ class RepositoryPunkAPI {
                 service ?: builder.build().create(InterfacePunkAPI::class.java)
             }
 
-        suspend fun getBeers(viewModel: ViewModelStoreOwner, page: Int, elements: Int) =
+        suspend fun getBeers(viewModel: ViewModelStoreOwner, page: Int, elements: Int): List<BeerModel> =
             try {
                 getService(viewModel).getBeers(page, elements)
             } catch (ex: Exception) {
-                null
                 Log.e(TAG, ex.message!!)
+                emptyList()
             }
     }
 }
